@@ -19,6 +19,7 @@
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
     "create-component": "yarn run create-component-app",
+    "lint": "eslint --ext js src",
     "start": "react-native-scripts start",
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
