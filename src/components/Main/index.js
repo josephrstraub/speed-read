@@ -1,15 +1,15 @@
 // @flow
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { Slider, Text, View } from 'react-native';
 import styles from './styles';
 
 type Props = {};
-type State = { activeWordIndex: number, bookDescription: string[] };
+type State = { activeWordIndex: number, bookDescription: string[], speed: number };
 
 export default class Main extends React.Component<Props, State> {
   constructor(): void {
     super();
-    this.state = { activeWordIndex: 0, bookDescription: [] };
+    this.state = { activeWordIndex: 0, bookDescription: [], speed: 300 };
   }
 
   componentDidMount = (): void => {
@@ -23,6 +23,11 @@ export default class Main extends React.Component<Props, State> {
         const bookDescription = json.items[0].volumeInfo.description.split(' ');
         this.setState({ activeWordIndex: 0, bookDescription }, this.startIterator);
       });
+  }
+
+  setSpeed = (speed: number): void => {
+    this.endIterator();
+    this.setState({ speed }, this.startIterator);
   }
 
   endIterator = (): void => {
@@ -44,7 +49,7 @@ export default class Main extends React.Component<Props, State> {
   }
 
   startIterator = (): void => {
-    this.intervalId = setInterval(this.showNextWord, 300);
+    this.intervalId = setInterval(this.showNextWord, this.state.speed);
   }
 
   togglePlaybackState = (): void => {
@@ -57,14 +62,23 @@ export default class Main extends React.Component<Props, State> {
 
   render(): React.Element<any> {
     return (
-      <View
-        onStartShouldSetResponder={() => {
-          this.togglePlaybackState();
-          return true;
-        }}
-        style={styles.container}
-      >
-        <Text style={styles.text}>{this.state.bookDescription[this.state.activeWordIndex]}</Text>
+      <View style={styles.container}>
+        <Slider
+          maximumValue={1000}
+          minimumValue={100}
+          onSlidingComplete={this.setSpeed}
+          value={300}
+          style={styles.slider}
+        />
+        <View
+          style={styles.main}
+          onStartShouldSetResponder={() => {
+            this.togglePlaybackState();
+            return true;
+          }}
+        >
+          <Text style={styles.text}>{this.state.bookDescription[this.state.activeWordIndex]}</Text>
+        </View>
       </View>
     );
   }
