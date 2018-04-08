@@ -6,5 +6,8 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  text: {
+    fontSize: 30
   }
 });
