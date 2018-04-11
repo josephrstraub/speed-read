@@ -188,6 +188,7 @@ rules:
   no-inline-comments: 1
   no-lonely-if: 1
   no-mixed-spaces-and-tabs: 0
+  no-mixed-operators: 0
   no-multiple-empty-lines:
     - 1
     - max: 2
