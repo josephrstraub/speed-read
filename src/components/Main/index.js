@@ -3,6 +3,9 @@ import * as React from 'react';
 import { Slider, Text, View } from 'react-native';
 import styles from './styles';
 
+const MAXIMUM_SPEED: number = 1000;
+const MINIMUM_SPEED: number = 100;
+
 type Props = {};
 type State = { activeWordIndex: number, bookDescription: string[], speed: number };
 
@@ -25,7 +28,8 @@ export default class Main extends React.Component<Props, State> {
       });
   }
 
-  setSpeed = (speed: number): void => {
+  setSpeed = (sliderValue: number): void => {
+    const speed: number = MAXIMUM_SPEED - sliderValue + MINIMUM_SPEED;
     this.endIterator();
     this.setState({ speed }, this.startIterator);
   }
@@ -64,10 +68,10 @@ export default class Main extends React.Component<Props, State> {
     return (
       <View style={styles.container}>
         <Slider
-          maximumValue={1000}
-          minimumValue={100}
+          maximumValue={MAXIMUM_SPEED}
+          minimumValue={MINIMUM_SPEED}
           onSlidingComplete={this.setSpeed}
-          value={300}
+          value={700}
           style={styles.slider}
         />
         <View
